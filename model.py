@@ -69,10 +69,10 @@ class MAML:
     grads = tf.gradients(train_loss, theta.values()) # compute gradients
     gradients = dict(zip(theta.keys(), grads))
 
-    theta = dict(zip(theta.keys(),
+    theta_prime = dict(zip(theta.keys(),
       [theta[key] - self.inner_lr * gradients[key] for key in theta.keys()]))
 
-    test_logits = self.forward(xte, theta)
+    test_logits = self.forward(xte, theta_prime)
     cent = cross_entropy(test_logits, yte)
     acc = accuracy(test_logits, yte)
     return cent, acc
